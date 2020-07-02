@@ -51,3 +51,19 @@
 - Ориентированы на время -- каждая запись имеет отметку времени;  
 - Только добавление -- данные только добавляются, но не обновляются;  
 - Работа со свежими данными.  
+
+#### Хранение исторических данных в NoSQL  
+- Обычные (Elasticsearch);  
+- NotNoSQL ([Clickhouse](https://clickhouse.tech/));  
+- Специализированные (Victoria Metrics, Thanos, Cortex).  
+
+#### Инструменты мониторинга  
+- `Zabbix` -- свой агент, свой веб, SQL database.  
+- `nagios` / `Icinga` -- свой агент, свой веб, SQL database.  
+- `Graphite` -- carbon (агент), whisper (tsdb), graphite-web.  
+- `Cacti`, `ganglia`, `collectd`, `mrtg`, `munin` -- база `rrdtool`.  
+- `Netdata` -- агент и веб.  
+- `Prometheus` -- node_exporter (агент), prometheus (база, веб), alertmanager.  
+- `InfluxData` -- telegraph (агент), influxdb, chronograph (web), kapacitor (alerts).  
+- `StatsD` -- набор инструментов для сбораметрик.  
+- `Graphana` -- интерфейс для дашбордов и алертинга.  
