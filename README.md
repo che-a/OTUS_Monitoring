@@ -8,9 +8,6 @@
 ---
 **[Занятие 1. Задачи мониторинга и алертинга](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/01/README.md)**  
 
-
-**Занятие 1. Задачи мониторинга и алертинга**  
-
 **Занятие 2. Мониторинг на основе Carbon, Graphite и Telegraf**  
 *Задание:* []() 
 
