@@ -6,7 +6,7 @@
 
 ### Модуль 1. Мониторинг и алертинг
 ---
-**[Занятие 1. Задачи мониторинга и алертинга](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/01)**  
+**[Занятие 1. Задачи мониторинга и алертинга](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/01/README.md)**  
 
 
 **Занятие 1. Задачи мониторинга и алертинга**  
