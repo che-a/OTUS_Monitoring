@@ -11,6 +11,8 @@
 **Занятие 2. Мониторинг на основе Carbon, Graphite и Telegraf**  
 *Задание:* []()  
 
+**Занятие 9. Netdata, metricbeat, hearthbeat, mtail**
+
 ### Модуль 2. Zabbix
 ---
 **Занятие 3. Установка и конфигурация Zabbix**  
@@ -26,7 +28,7 @@
 **Занятие 6. Графики и комплексные экраны**  
 *Задание:* []()
 
-**Занятие 7. Настройка алертинга**  
+**Занятие 8. Настройка алертинга**  
 *Задание:* [Настройка оповещений на e-mail, Telegram](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/07/README.md)
 
 
