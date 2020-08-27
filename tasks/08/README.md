@@ -49,6 +49,13 @@ otus_important_metrics[metric3]
 
 </details>
 
+<details>
+   <summary>Термины и определения Zabbix</summary>
+
+#### 
+- Н  
+
+</details>
 
 ## 4. Выполнение задания <a name="exec"></a>  
 #### Лабораторный стенд
