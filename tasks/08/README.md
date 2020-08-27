@@ -57,5 +57,13 @@ otus_important_metrics[metric3]
 
 </details>
 
+<details>
+   <summary>Порядок настройки Telegram чат-бота</summary>
+
+- Выбор параметров в .  
+
+</details>
+
+
 ## 4. Выполнение задания <a name="exec"></a>  
 #### Лабораторный стенд
