@@ -35,7 +35,7 @@
 *Задание:* []()
 
 **Занятие 8. Настройка алертинга**  
-*Задание:* [Настройка оповещений на e-mail, Telegram](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/07/README.md)
+*Задание:* [Настройка оповещений на e-mail, Telegram](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/08/README.md)
 
 
 
