@@ -73,9 +73,6 @@ otus_important_metrics[metric3]
 <details>
    <summary>Термины и определения Zabbix</summary>
 
-####
-- Н  
-
 </details>
 
 <details>
