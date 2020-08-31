@@ -78,11 +78,11 @@ otus_important_metrics[metric3]
 <details>
    <summary>Создание Telegram-бота и канала</summary>
 
-![mountains](/screenshots/screen01.png "Пейзаж с горами")  
+![Создание Telegram-бота и канала](screenshots/screen01.png "Пейзаж с горами")  
 
-![mountains](/screenshots/screen02.png "Пейзаж с горами")  
+![Создание Telegram-бота и канала](screenshots/screen02.png "Пейзаж с горами")  
 
-![mountains](/screenshots/screen03.png "Пейзаж с горами")  
+![Создание Telegram-бота и канала](screenshots/screen03.png "Пейзаж с горами")  
 
 </details>
 
