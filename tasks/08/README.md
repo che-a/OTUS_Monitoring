@@ -76,9 +76,13 @@ otus_important_metrics[metric3]
 </details>
 
 <details>
-   <summary>Порядок настройки Telegram чат-бота</summary>
+   <summary>Создание Telegram-бота и канала</summary>
 
-- Выбор параметров в .  
+![mountains](/screenshots/screen01.png "Пейзаж с горами")  
+
+![mountains](/screenshots/screen02.png "Пейзаж с горами")  
+
+![mountains](/screenshots/screen03.png "Пейзаж с горами")  
 
 </details>
 
