@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
-SRV2='web'
-SRV1='elk'
-ANSIBLE_SERVER='log'
-SRV2_IP='192.168.50.30'
-SRV1_IP='192.168.50.20'
-KEY='/home/vagrant/.ssh/id_rsa'
-KEY_PUB=$KEY'.pub'
+#SRV2='web'
+#SRV1='elk'
+#ANSIBLE_SERVER='log'
+#SRV2_IP='192.168.50.30'
+#SRV1_IP='192.168.50.20'
+#KEY='/home/vagrant/.ssh/id_rsa'
+#KEY_PUB=$KEY'.pub'
+
+wget https://repo.zabbix.com/zabbix/5.0/debian/pool/main/z/zabbix-release/zabbix-release_5.0-1+buster_all.deb
+sudo dpkg -i zabbix-release_5.0-1+buster_all.deb
+sudo apt update -y && sudo apt upgrade -y
+sudo apt install -y htop mc tree
 
 case $HOSTNAME in
     $ANSIBLE_SERVER)
@@ -36,6 +41,6 @@ case $HOSTNAME in
         ;;
 esac
 
-yes | cp -rf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-reboot
+#yes | cp -rf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+#sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+#reboot
