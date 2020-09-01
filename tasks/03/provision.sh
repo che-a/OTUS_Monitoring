@@ -8,6 +8,11 @@
 #KEY='/home/vagrant/.ssh/id_rsa'
 #KEY_PUB=$KEY'.pub'
 
+wget https://repo.zabbix.com/zabbix/5.0/debian/pool/main/z/zabbix-release/zabbix-release_5.0-1+buster_all.deb
+sudo dpkg -i zabbix-release_5.0-1+buster_all.deb
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get install -y htop mc tree
+
 sudo timedatectl set-timezone Europe/Moscow
 
 sudo echo "locales locales/default_environment_locale select ru_RU.UTF-8" | sudo debconf-set-selections
@@ -15,10 +20,7 @@ sudo echo "locales locales/locales_to_be_generated multiselect ru_RU.UTF-8 UTF-8
 sudo rm "/etc/locale.gen"
 sudo dpkg-reconfigure --frontend noninteractive locales
 
-wget https://repo.zabbix.com/zabbix/5.0/debian/pool/main/z/zabbix-release/zabbix-release_5.0-1+buster_all.deb
-sudo dpkg -i zabbix-release_5.0-1+buster_all.deb
-sudo apt-get update -y && sudo apt-get upgrade -y
-sudo apt-get install -y htop mc tree
+reboot
 
 case $HOSTNAME in
     $ANSIBLE_SERVER)
