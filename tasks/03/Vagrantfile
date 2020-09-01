@@ -1,38 +1,41 @@
 # -*- mode: ruby -*-
 # vim: set ft=ruby :
 
-MASK = "255.255.255.0";
-VB_NET = "les08-int-net"
+NET_MASK_24 = "255.255.255.0";
+# NET_MASK_29 = "255.255.255.248";
+# NET_MASK_30 = "255.255.255.252";
 
+VB_PREFIX = "otus-monlog-les03-";
+VB_NET_A = VB_PREFIX + "intnet-A";
 
 HOSTS = {
 
     :"zbx5-db" => {
-        :box_name => "centos/7",
+        :box_name => "generic/debian10",
         :cpu => '1',
-        :ram => "512",
+        :ram => "768",
         :net => [
-            {adapter: 2, ip: "192.168.50.30", netmask: MASK, virtualbox__intnet: VB_NET},
+            {adapter: 2, ip: "192.168.50.30", netmask: NET_MASK_24, virtualbox__intnet: VB_NET_A},
         ],
         :port => []
     },
 
-    :"zbx5-srv" => {
-        :box_name => "centos/7",
-        :cpu => '2',
-        :ram => "2048",
-        :net => [
-            {adapter: 2, ip: "192.168.50.20", netmask: MASK, virtualbox__intnet: VB_NET},
-        ],
-        :port => []
-    },
+#    :"zbx5-srv" => {
+#        :box_name => "centos/7",
+#        :cpu => '2',
+#        :ram => "2048",
+#        :net => [
+#            {adapter: 2, ip: "192.168.50.20", netmask: MASK, virtualbox__intnet: VB_NET},
+#        ],
+#        :port => []
+#    },
 
     :"zbx5-web" => {
-        :box_name => "centos/7",
+        :box_name => "generic/debian10",
         :cpu => '1',
         :ram => "512",
         :net => [
-            {adapter: 2, ip: "192.168.50.10", netmask: MASK, virtualbox__intnet: VB_NET},
+            {adapter: 2, ip: "192.168.50.10", netmask: NET_MASK_24, virtualbox__intnet: VB_NET_A},
         ],
         :port => [
             {guest: 80, host: 8080},
@@ -60,7 +63,7 @@ Vagrant.configure("2") do |config|
             box.vm.provider :virtualbox do |vb|
                 vb.cpus = boxconfig[:cpu]
                 vb.memory = boxconfig[:ram]
-                vb.name = "che-les08-" + "%s" % boxname
+                vb.name = VB_PREFIX + "%s" % boxname
             end
 
             box.vm.provision "shell", run: "always", inline: <<-SHELL
