@@ -5,7 +5,7 @@ BOX_NAME = "generic/debian10";
 
 IP_NET = "192.168.50";
 NET_MASK_24 = "255.255.255.0";
-IP_ZBX5_DB = IP_NET + ".10";
+IP_ZBX5_DB  = IP_NET + ".10";
 IP_ZBX5_SRV = IP_NET + ".20";
 IP_ZBX5_WEB = IP_NET + ".30";
 

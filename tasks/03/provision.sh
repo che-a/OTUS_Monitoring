@@ -8,19 +8,24 @@
 #KEY='/home/vagrant/.ssh/id_rsa'
 #KEY_PUB=$KEY'.pub'
 
+
+# Подключение репозитория Zabbix и обновление системы
 wget https://repo.zabbix.com/zabbix/5.0/debian/pool/main/z/zabbix-release/zabbix-release_5.0-1+buster_all.deb
 sudo dpkg -i zabbix-release_5.0-1+buster_all.deb
 sudo apt-get update -y && sudo apt-get upgrade -y
-sudo apt-get install -y htop mc tree
 
+# Установка часового пояса
 sudo timedatectl set-timezone Europe/Moscow
 
+# Установка русской локали
 sudo echo "locales locales/default_environment_locale select ru_RU.UTF-8" | sudo debconf-set-selections
 sudo echo "locales locales/locales_to_be_generated multiselect ru_RU.UTF-8 UTF-8" | sudo debconf-set-selections
 sudo rm "/etc/locale.gen"
 sudo dpkg-reconfigure --frontend noninteractive locales
 
-reboot
+# Установка дополнительных пакетов
+sudo apt-get install -y htop mc tree zabbix-agent
+sudo systemctl zabbix-agentd stop
 
 case $HOSTNAME in
     $ANSIBLE_SERVER)
@@ -43,13 +48,18 @@ case $HOSTNAME in
         chown -R vagrant:vagrant /home/vagrant/ansible-log
         ;;
 
-    $SRV2|$SRV1)
-        sed -i '65s/PasswordAuthentication no/PasswordAuthentication yes/g' \
-            /etc/ssh/sshd_config
-        systemctl restart sshd.service
+    'zbx5-db')
+        apt-get install mariadb-server zabbix-server-mysql
         ;;
+
+    'zbx5-srv')
+        apt-get install zabbix-server-mysql
+        ;;
+
+    'zbx5-web')
+        apt-get install zabbix-frontend-php zabbix-nginx-conf
+        ;;
+
 esac
 
-#yes | cp -rf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-#sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-#reboot
+reboot
