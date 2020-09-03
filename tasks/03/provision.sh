@@ -25,7 +25,7 @@ sudo dpkg-reconfigure --frontend noninteractive locales
 
 # Установка дополнительных пакетов
 sudo apt-get install -y htop mc tree zabbix-agent
-sudo systemctl zabbix-agentd stop
+sudo systemctl zabbix-agent stop
 
 case $HOSTNAME in
     $ANSIBLE_SERVER)
@@ -48,16 +48,16 @@ case $HOSTNAME in
         chown -R vagrant:vagrant /home/vagrant/ansible-log
         ;;
 
-    'zbx5-db')
-        apt-get install mariadb-server zabbix-server-mysql
+    "zbx5-db")
+        sudo apt-get install mariadb-server 
         ;;
 
-    'zbx5-srv')
-        apt-get install zabbix-server-mysql
+    "zbx5-srv")
+        sudo apt-get install zabbix-server-mysql
         ;;
 
-    'zbx5-web')
-        apt-get install zabbix-frontend-php zabbix-nginx-conf
+    "zbx5-web")
+        sudo apt-get install zabbix-frontend-php zabbix-nginx-conf
         ;;
 
 esac
