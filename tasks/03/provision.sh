@@ -48,15 +48,15 @@ case $HOSTNAME in
         chown -R vagrant:vagrant /home/vagrant/ansible-log
         ;;
 
-    "zbx5-db")
-        sudo apt-get install mariadb-server 
+    zbx5-db)
+        sudo apt-get install mariadb-server
         ;;
 
-    "zbx5-srv")
+    zbx5-srv)
         sudo apt-get install zabbix-server-mysql
         ;;
 
-    "zbx5-web")
+    zbx5-web)
         sudo apt-get install zabbix-frontend-php zabbix-nginx-conf
         ;;
 
