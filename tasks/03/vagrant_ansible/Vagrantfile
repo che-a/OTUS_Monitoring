@@ -70,17 +70,6 @@ Vagrant.configure("2") do |config|
                 vb.name = VB_PREFIX + "%s" % boxname
             end
 
-            box.vm.provision "shell", path: "provision.sh"
-
-            #box.vm.provision "shell", run: "always", inline: <<-SHELL
-                #cp -rf /vagrant/files_all_vms/* /
-                #cp -rf /vagrant/files_individ_vms/* /home/vagrant/
-                #sed -i 's/NAME=.*/NAME="'$HOSTNAME'"/' /etc/sysconfig/provision.env
-                #systemctl daemon-reload
-                #systemctl enable provision.service
-                #systemctl start provision.service &
-            #SHELL
-
         end
     end
 end
