@@ -1,0 +1,10 @@
+---
+- name: Configure webserver with nginx
+  hosts: zbx5-web
+  become: True
+  tasks:
+    - name: Install nginx
+      apt: name=nginx update_cache=yes
+
+    - name: Restart nginx
+      service: name=nginx state=restarted

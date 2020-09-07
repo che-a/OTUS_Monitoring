@@ -3,8 +3,8 @@
 
 BOX_NAME = "generic/debian10";
 
-IP_NET = "192.168.50";
 NET_MASK_24 = "255.255.255.0";
+IP_NET = "192.168.50";
 IP_ZBX5_DB  = IP_NET + ".10";
 IP_ZBX5_SRV = IP_NET + ".20";
 IP_ZBX5_WEB = IP_NET + ".30";
@@ -51,25 +51,30 @@ HOSTS = {
 
 Vagrant.configure("2") do |config|
 
-    HOSTS.each do |boxname, boxconfig|
+    HOSTS.each do |host, hostconfig|
 
-        config.vm.define boxname do |box|
-            box.vm.box = boxconfig[:box_name]
-            box.vm.host_name = boxname.to_s
+        config.vm.define host do |box|
+            box.vm.box = hostconfig[:box_name]
+            box.vm.host_name = host.to_s
 
-            boxconfig[:net].each do |ipconf|
+            hostconfig[:net].each do |ipconf|
                 box.vm.network "private_network", ipconf
             end
-            boxconfig[:port].each do |portconf|
+            hostconfig[:port].each do |portconf|
                 box.vm.network "forwarded_port", portconf
             end
 
             box.vm.provider :virtualbox do |vb|
-                vb.cpus = boxconfig[:cpu]
-                vb.memory = boxconfig[:ram]
-                vb.name = VB_PREFIX + "%s" % boxname
+                vb.cpus = hostconfig[:cpu]
+                vb.memory = hostconfig[:ram]
+                vb.name = VB_PREFIX + "%s" % host
             end
-
+=begin
+            box.vm.provision "ansible" do |ansible|
+                ansible.playbook = "playbooks/playbook.yml"
+            end
+=end
         end
+
     end
 end
