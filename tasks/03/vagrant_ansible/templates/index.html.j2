@@ -1,16 +1,26 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
     <head>
         <meta charset="utf-8" />
-        <title>Ansible</title>
+        <title>Welcome to NGiNX deployed with Ansible!</title>
+        <style>
+            body {
+                width: 35em;
+                margin: 0 auto;
+                font-family: Tahoma, Verdana, Arial, sans-serif;
+            }
+        </style>
     </head>
     <body>
-        <h1>NGiNX, configured by Ansible</h1>
+
+        <h1>Welcome to nginx!</h1>
         <p>
-            If you can see this? Ansible successfully installed nginx.
+            If you see this page, the nginx web server is successfully installed and
+            working. Further configuration is required.
         </p>
-        <p>
-            {{ ansible_managed }}
-        </p>
+
+        <p><em>{{ ansible_managed }}</em></p>
+
     </body>
 </html>
+~

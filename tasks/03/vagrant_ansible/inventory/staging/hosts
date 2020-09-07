@@ -1,6 +1,6 @@
-zbx5-db ansible_host=127.0.0.1 ansible_port=2222
-zbx5-srv ansible_host=127.0.0.1 ansible_port=2222
-zbx5-web ansible_host=127.0.0.1 ansible_port=2222
+zbx5-db ansible_host=127.0.0.1 ansible_ssh_port=2222
+zbx5-srv ansible_host=127.0.0.1 ansible_ssh_port=2200
+zbx5-web ansible_host=127.0.0.1 ansible_ssh_port=2201
 
 [zbx5]
 zbx5-db
