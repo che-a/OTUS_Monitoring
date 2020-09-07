@@ -3,6 +3,7 @@
 
 BOX_NAME = "generic/debian10";
 
+IP_CTRL     = "192.168.50.2";
 IP_ZBX5_DB  = "192.168.50.10";
 IP_ZBX5_SRV = "192.168.50.20";
 IP_ZBX5_WEB = "192.168.50.30";
@@ -68,10 +69,10 @@ Vagrant.configure("2") do |config|
             box.vm.provider :virtualbox do |vb|
                 # Иногда выполнение команды vagrant up
                 # зависает на: SSH auth method: private key
-                vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+                #vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
                 vb.cpus = hostconfig[:cpu]
                 vb.memory = hostconfig[:ram]
-                vb.name = VB_PREFIX + host.to_s
+                vb.name = VB_PREFIX + "%s" % host
             end
 =begin
             box.vm.provision "ansible" do |ansible|
