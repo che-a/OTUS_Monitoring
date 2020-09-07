@@ -3,11 +3,10 @@
 
 BOX_NAME = "generic/debian10";
 
+IP_ZBX5_DB  = "192.168.50.10";
+IP_ZBX5_SRV = "192.168.50.20";
+IP_ZBX5_WEB = "192.168.50.30";
 NET_MASK_24 = "255.255.255.0";
-IP_NET = "192.168.50";
-IP_ZBX5_DB  = IP_NET + ".10";
-IP_ZBX5_SRV = IP_NET + ".20";
-IP_ZBX5_WEB = IP_NET + ".30";
 
 VB_PREFIX = "otus-monlog-les03-";
 VB_NET_A = VB_PREFIX + "intnet-A";

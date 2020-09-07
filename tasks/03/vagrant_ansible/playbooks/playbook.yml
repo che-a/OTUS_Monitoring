@@ -7,7 +7,7 @@
       apt: name=nginx update_cache=yes
 
     - name: Copy nginx config file
-      copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
+      copy: src=../files/nginx.conf dest=/etc/nginx/sites-available/default
 
     - name: Enable nginx configuration
       file: >
@@ -16,7 +16,7 @@
         state=link
 
     - name: Copy index.html
-      template: src=templates/index.html.j2 dest=/usr/share/nginx/html/index.html
+      template: src=../templates/index.html.j2 dest=/usr/share/nginx/html/index.html
         mode=0644
 
     - name: Restart nginx
