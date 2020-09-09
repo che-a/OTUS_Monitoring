@@ -45,8 +45,8 @@ HOSTS = {
             {guest: 80, host: 8080},
             {guest: 443, host: 8081}
         ]
-    }
-
+    },
+#=end
     :"ctrl" => {
         :box_name => BOX_NAME,
         :cpu => '1',
@@ -55,7 +55,7 @@ HOSTS = {
             {adapter: 2, ip: IP_CTRL, netmask: NET_MASK_24, virtualbox__intnet: VB_NET_A},
         ],
         :port => []
-    },
+    }
 
 }
 
@@ -85,14 +85,26 @@ Vagrant.configure("2") do |config|
                 vb.name = VB_PREFIX + "%s" % host
             end
 #=begin
-            if (host == "ctrl")
-                box.vm.provision :ansible_local do |ansible|
-                    ansible.playbook        = "playbooks/playbook.yml"
-                    ansible.verbose         = true
-                    ansible.install         = true
-                    ansible.limit           = "all"
-                    ansible.inventory_path  = "inventory/staging/hosts"
-                end
+            if (host.to_s == "ctrl")
+                box.vm.provision "shell", run: "always", inline: <<-SHELL
+                    cp -rf /vagrant/ansible /home/vagrant/
+
+                    sudo apt-get update -y #&& sudo apt-get upgrade
+                    sudo apt-get install -y ansible
+
+                    # Установка часового пояса
+                    # sudo timedatectl set-timezone Europe/Moscow
+
+                    # Установка русской локали
+                    # sudo echo "locales locales/default_environment_locale select ru_RU.UTF-8" | sudo debconf-set-selections
+                    # sudo echo "locales locales/locales_to_be_generated multiselect ru_RU.UTF-8 UTF-8" | sudo debconf-set-selections
+                    # sudo rm "/etc/locale.gen"
+                    # sudo dpkg-reconfigure --frontend noninteractive locales
+
+                    # reboot
+                    ansible all -m ping
+                SHELL
+
             end
 #=end
         end
