@@ -1,6 +1,7 @@
-zbx5-db ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222
-zbx5-srv ansible_ssh_host=127.0.0.1 ansible_ssh_port=2200
-zbx5-web ansible_ssh_host=127.0.0.1 ansible_ssh_port=2201
+ctrl     ansible_connection=local
+zbx5-db  ansible_ssh_host=192.168.50.10 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/zbx5-db/virtualbox/private_key
+zbx5-srv ansible_ssh_host=192.168.50.20 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/zbx5-srv/virtualbox/private_key
+zbx5-web ansible_ssh_host=192.168.50.30 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/zbx5-web/virtualbox/private_key
 
 [zbx5]
 zbx5-db
