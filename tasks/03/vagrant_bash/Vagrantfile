@@ -5,6 +5,7 @@ BOX_NAME = "generic/debian10";
 
 IP_NET = "192.168.50";
 NET_MASK_24 = "255.255.255.0";
+IP_CTRL     = IP_NET + ".1";
 IP_ZBX5_DB  = IP_NET + ".10";
 IP_ZBX5_SRV = IP_NET + ".20";
 IP_ZBX5_WEB = IP_NET + ".30";
@@ -13,6 +14,16 @@ VB_PREFIX = "otus-monlog-les03-";
 VB_NET_A = VB_PREFIX + "intnet-A";
 
 HOSTS = {
+
+    :"ctrl" => {
+        :box_name => BOX_NAME,
+        :cpu => '1',
+        :ram => "512",
+        :net => [
+            {adapter: 2, ip: IP_CTRL, netmask: NET_MASK_24, virtualbox__intnet: VB_NET_A},
+        ],
+        :port => []
+    },
 
     :"zbx5-db" => {
         :box_name => BOX_NAME,
@@ -73,7 +84,7 @@ Vagrant.configure("2") do |config|
             #box.vm.provision "shell", path: "provision.sh"
 
             box.vm.provision "shell", run: "always", inline: <<-SHELL
-            
+
             SHELL
 
         end
