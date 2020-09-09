@@ -54,7 +54,8 @@ HOSTS = {
         :net => [
             {adapter: 2, ip: IP_CTRL, netmask: NET_MASK_24, virtualbox__intnet: VB_NET_A},
         ],
-        :port => []
+        :port => [],
+        :is_ansible_server => true
     }
 
 }
@@ -85,23 +86,24 @@ Vagrant.configure("2") do |config|
                 vb.name = VB_PREFIX + "%s" % host
             end
 #=begin
-            if (host.to_s == "ctrl")
+            #if (host.to_s == "ctrl")
+            if (hostconfig[:is_ansible_server] == true)
+                box.vm.provision "file", source: "ansible", destination: "$HOME/"
                 box.vm.provision "shell", run: "always", inline: <<-SHELL
-                    cp -rf /vagrant/ansible /home/vagrant/
-
-                    sudo apt-get update -y #&& sudo apt-get upgrade
-                    sudo apt-get install -y ansible
+                    sudo apt-get update -y && sudo apt-get upgrade
+                    sudo apt-get install -y ansible tree
 
                     # Установка часового пояса
-                    # sudo timedatectl set-timezone Europe/Moscow
+                    sudo timedatectl set-timezone Europe/Moscow
 
                     # Установка русской локали
-                    # sudo echo "locales locales/default_environment_locale select ru_RU.UTF-8" | sudo debconf-set-selections
-                    # sudo echo "locales locales/locales_to_be_generated multiselect ru_RU.UTF-8 UTF-8" | sudo debconf-set-selections
-                    # sudo rm "/etc/locale.gen"
-                    # sudo dpkg-reconfigure --frontend noninteractive locales
+                    sudo echo "locales locales/default_environment_locale select ru_RU.UTF-8" | sudo debconf-set-selections
+                    sudo echo "locales locales/locales_to_be_generated multiselect ru_RU.UTF-8 UTF-8" | sudo debconf-set-selections
+                    sudo rm "/etc/locale.gen"
+                    sudo dpkg-reconfigure --frontend noninteractive locales
 
                     # reboot
+                    cd ansible/
                     ansible all -m ping
                 SHELL
 
