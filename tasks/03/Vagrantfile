@@ -6,14 +6,14 @@ BOX_NAME = "generic/debian10";
 IP_ZBX5_DB  = "192.168.50.10";
 IP_ZBX5_SRV = "192.168.50.20";
 IP_ZBX5_WEB = "192.168.50.30";
-IP_CTRL     = "192.168.50.40";
+IP_CTRL     = "192.168.50.99";
 NET_MASK_24 = "255.255.255.0";
 
 VB_PREFIX = "otus-monlog-les03-";
 VB_NET_A = VB_PREFIX + "intnet-A";
 
 HOSTS = {
-=begin
+#=begin
     :"zbx5-db" => {
         :box_name => BOX_NAME,
         :cpu => '1',
@@ -33,7 +33,7 @@ HOSTS = {
         ],
         :port => []
     },
-=end
+#=end
     :"zbx5-web" => {
         :box_name => BOX_NAME,
         :cpu => '1',
@@ -78,36 +78,52 @@ Vagrant.configure("2") do |config|
             end
 
             box.vm.provider :virtualbox do |vb|
-                # Иногда выполнение команды vagrant up
-                # зависает на: SSH auth method: private key
-                #vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
                 vb.cpus = hostconfig[:cpu]
                 vb.memory = hostconfig[:ram]
                 vb.name = VB_PREFIX + "%s" % host
             end
 #=begin
-            #if (host.to_s == "ctrl")
+
+#=begin
             if (hostconfig[:is_ansible_server] == true)
-                box.vm.provision "file", source: "ansible", destination: "$HOME/"
+                box.vm.provision "file", source: "ansible", destination: "$HOME"
+                box.vm.provision "file", source: "ssh/config", destination: "$HOME/.ssh/config"
                 box.vm.provision "shell", run: "always", inline: <<-SHELL
                     sudo apt-get update -y && sudo apt-get upgrade
-                    sudo apt-get install -y ansible tree
+                    sudo apt-get install -y ansible ansible-lint sshpass tree
 
                     # Установка часового пояса
-                    sudo timedatectl set-timezone Europe/Moscow
+                    #sudo timedatectl set-timezone Europe/Moscow
 
                     # Установка русской локали
-                    sudo echo "locales locales/default_environment_locale select ru_RU.UTF-8" | sudo debconf-set-selections
-                    sudo echo "locales locales/locales_to_be_generated multiselect ru_RU.UTF-8 UTF-8" | sudo debconf-set-selections
-                    sudo rm "/etc/locale.gen"
-                    sudo dpkg-reconfigure --frontend noninteractive locales
+                    #sudo echo "locales locales/default_environment_locale select ru_RU.UTF-8" | sudo debconf-set-selections
+                    #sudo echo "locales locales/locales_to_be_generated multiselect ru_RU.UTF-8 UTF-8" | sudo debconf-set-selections
+                    #sudo rm "/etc/locale.gen"
+                    #sudo dpkg-reconfigure --frontend noninteractive locales
+
+                    # Использование имен серверов вместо IP-адресов
+                    echo "192.168.50.10  zbx5-db" >> /etc/hosts
+                    echo "192.168.50.20  zbx5-srv" >> /etc/hosts
+                    echo "192.168.50.30  zbx5-web" >> /etc/hosts
+
+                    # Чтобы не вводить пароль при добавлении публичного ключа
+                    runuser -l vagrant -c "ssh-keygen -t rsa -N '' -b 2048 -f /home/vagrant/.ssh/vagrant@ctrl"
+                    runuser -l vagrant -c "sshpass -p vagrant ssh-copy-id -i /home/vagrant/.ssh/vagrant@ctrl zbx5-db"
+                    runuser -l vagrant -c "sshpass -p vagrant ssh-copy-id -i /home/vagrant/.ssh/vagrant@ctrl zbx5-srv"
+                    runuser -l vagrant -c "sshpass -p vagrant ssh-copy-id -i /home/vagrant/.ssh/vagrant@ctrl zbx5-web"
 
                     # reboot
-                    cd ansible/
+                    
                     ansible all -m ping
                 SHELL
-
+            else
+                box.vm.provision "shell", run: "always", inline: <<-SHELL
+                    #sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' \
+                    #    /etc/ssh/sshd_config
+                    #sudo systemctl restart sshd.service
+                SHELL
             end
+#=end
 #=end
         end
 
