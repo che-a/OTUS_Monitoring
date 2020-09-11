@@ -22,7 +22,7 @@
 ### Модуль 2. Zabbix
 ---
 **Занятие 3. Установка и конфигурация**  
-[Тестовый стенд на Vagrant с трехкомпонентной установкой Zabbix](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/03/README.md)  
+[Тестовый стенд на Vagrant с трехкомпонентной установкой Zabbix](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/03)  
 
 **Занятие 4. Discovery Trapper**  
 *Задание:* []()
