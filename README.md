@@ -12,7 +12,7 @@
 **[Занятие 1. Задачи мониторинга и алертинга](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/01/README.md)**  
 
 **Занятие 2. Мониторинг на основе Carbon, Graphite и Telegraf**  
-[Тестовый стенд на Vagrant с развернутым TICK-стеком]()  
+[Лабораторный стенд на Vagrant с развернутым TICK-стеком]()  
 
 **Занятие 9. Netdata, metricbeat, hearthbeat, mtail**
 
@@ -22,7 +22,7 @@
 ### Модуль 2. Zabbix
 ---
 **Занятие 3. Установка и конфигурация**  
-[Тестовый стенд на Vagrant с трехкомпонентной установкой Zabbix](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/03)  
+[Лабораторный стенд на Vagrant с трехкомпонентной установкой Zabbix](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/03)  
 
 **Занятие 4. Discovery Trapper**  
 *Задание:* []()
