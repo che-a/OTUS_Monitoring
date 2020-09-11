@@ -26,12 +26,15 @@
 
 **Занятие 4. Discovery Trapper**  
 
+
 **Занятие 5. Мониторинг порталов и баз данных**  
+
 
 **Занятие 6. Графики и комплексные экраны**  
 
+
 **Занятие 8. Настройка алертинга**  
-*Задание:* [Настройка оповещений на e-mail, Telegram](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/08/README.md)
+*Задание:* [Настройка оповещений на e-mail, Telegram](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/08)
 
 
 
