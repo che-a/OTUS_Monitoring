@@ -108,7 +108,8 @@ Vagrant.configure("2") do |config|
                     openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
                         -subj /CN=localhost \
                         -keyout /home/vagrant/files/nginx.key \
-                        -out /home/vagrant/files/nginx.crt
+                        -out /home/vagrant/files/nginx.crt \
+                        &> /dev/null
 
                     chown vagrant:vagrant /home/vagrant/files/nginx.{key,crt}
 
