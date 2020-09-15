@@ -104,6 +104,14 @@ Vagrant.configure("2") do |config|
                     runuser -l vagrant -c "sshpass -p vagrant ssh-copy-id -i /home/vagrant/.ssh/vagrant@ctrl zbx5-srv"
                     runuser -l vagrant -c "sshpass -p vagrant ssh-copy-id -i /home/vagrant/.ssh/vagrant@ctrl zbx5-web"
 
+                    # Создание TLS-сертификатов для веб-сервера (nginx)
+                    openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
+                        -subj /CN=localhost \
+                        -keyout /home/vagrant/files/nginx.key \
+                        -out /home/vagrant/files/nginx.crt
+
+                    chown vagrant:vagrant /home/vagrant/files/nginx.{key,crt}
+
                     reboot
                 SHELL
             end
