@@ -7,7 +7,6 @@
     cert_file: /etc/nginx/ssl/nginx.crt
     conf_file: /etc/nginx/sites-available/default
     server_name: localhost
-    server: hostname
   tasks:
     - name: install nginx
       apt: >
