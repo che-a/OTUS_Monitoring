@@ -1,0 +1,23 @@
+Host zbx5-db
+    HostName 192.168.50.10
+    IdentityFile ~/.ssh/vagrant@ctrl
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    User vagrant
+    Port 22
+
+Host zbx5-srv
+    HostName 192.168.50.20
+    IdentityFile ~/.ssh/vagrant@ctrl
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    User vagrant
+    Port 22
+
+Host zbx5-web
+    HostName 192.168.50.30
+    IdentityFile ~/.ssh/vagrant@ctrl
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    User vagrant
+    Port 22
