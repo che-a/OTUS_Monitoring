@@ -1,41 +1,59 @@
 #!/usr/bin/env bash
 
-SRV2='web'
-SRV1='elk'
-ANSIBLE_SERVER='log'
-SRV2_IP='192.168.50.30'
-SRV1_IP='192.168.50.20'
-KEY='/home/vagrant/.ssh/id_rsa'
-KEY_PUB=$KEY'.pub'
+SRV='prom'
+CLIENT1='web1'
+
+SRV_IP='192.168.50.10'
+CLIENT1_IP='192.168.50.20'
+
+
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get install -y tree wget
+# Установка часового пояса
+timedatectl set-timezone Europe/Moscow
 
 case $HOSTNAME in
-    $ANSIBLE_SERVER)
-        yum install -y epel-release
-        yum install -y ansible ansible-lint nano sshpass tmux
+    $SRV)
         # Возможность использования имен серверов вместо IP-адресов
-        echo "$SRV2_IP  $SRV2" >> /etc/hosts
-        echo "$SRV1_IP  $SRV1" >> /etc/hosts
-        # Запретить SSH-клиенту при подключении к хосту осуществлять
-        # проверку подлинности его ключа.
-        sed -i '35s/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' \
-            /etc/ssh/ssh_config
+        echo "$CLIENT1_IP  $CLIENT1" >> /etc/hosts
 
-        # Чтобы не вводить пароль при добавлении публичного ключа
-        runuser -l vagrant -c "ssh-keygen -t rsa -N '' -b 2048 -f $KEY"
-        runuser -l vagrant -c "sshpass -p vagrant ssh-copy-id -i $KEY_PUB $SRV2"
-        runuser -l vagrant -c "sshpass -p vagrant ssh-copy-id -i $KEY_PUB $SRV1"
 
-        cp -r /vagrant/ansible-log/ /home/vagrant/
-        chown -R vagrant:vagrant /home/vagrant/ansible-log
+
+        wget https://github.com/prometheus/prometheus/releases/download/v2.21.0/prometheus-2.21.0.linux-amd64.tar.gz &> /dev/null
+        tar zxvf prometheus-*.linux-amd64.tar.gz && cd prometheus-*.linux-amd64
+
+        sudo mkdir /etc/prometheus /var/lib/prometheus
+
+
+        sudo cp prometheus promtool /usr/local/bin/
+        sudo cp -r console_libraries consoles prometheus.yml /etc/prometheus
+
+        sudo useradd --no-create-home --shell /bin/false prometheus
+        sudo chown -R prometheus:prometheus /etc/prometheus /var/lib/prometheus
+        sudo chown prometheus:prometheus /usr/local/bin/{prometheus,promtool}
+
+        # Настройка автозапуска через systemd
+        sudo cp /home/vagrant/prometheus.service /etc/systemd/system/prometheus.service
+        # Перечитываем конфигурацию systemd:
+        sudo systemctl daemon-reload
+
+        # Разрешаем автозапуск:
+        sudo systemctl enable prometheus
+
+        # После ручного запуска мониторинга, который мы делали для проверки, могли сбиться права на папку библиотек — снова зададим ей владельца:
+        sudo chown -R prometheus:prometheus /var/lib/prometheus
+
+        # Запускаем службу:
+        sudo systemctl start prometheus
+
+        # ... и проверяем, что она запустилась корректно:
+        #systemctl status prometheus
+
+
         ;;
 
-    $SRV2|$SRV1)
-        sed -i '65s/PasswordAuthentication no/PasswordAuthentication yes/g' \
-            /etc/ssh/sshd_config
-        systemctl restart sshd.service
+    $CLIENT1)
         ;;
 esac
 
-yes | cp -rf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
 reboot
