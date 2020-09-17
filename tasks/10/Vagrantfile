@@ -1,0 +1,63 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+BOX_NAME = "generic/debian10";
+VB_PREFIX = "otus-monlog-les10-";
+VB_NET = VB_PREFIX + "intnet-les10";
+
+HOSTS = {
+    :"prom-srv" => {
+        :box_name => BOX_NAME,
+        :cpu => '1',
+        :ram => "512",
+        :net => [
+            {adapter: 2, ip: "192.168.50.10", netmask: 24, virtualbox__intnet: VB_NET},
+        ],
+        :port => [
+            {guest: 80, host: 8080},
+            {guest: 443, host: 8092}
+        ]
+    },
+
+    :"nginx" => {
+        :box_name => BOX_NAME,
+        :cpu => '1',
+        :ram => "512",
+        :net => [
+            {adapter: 2, ip: "192.168.50.20", netmask: 24, virtualbox__intnet: VB_NET},
+        ],
+        :port => [
+            {guest: 80, host: 8081},
+            {guest: 443, host: 8091}
+        ]
+    }
+
+}
+
+Vagrant.configure("2") do |config|
+
+    HOSTS.each do |host, hostconfig|
+
+        config.vm.define host do |box|
+            box.vm.box = hostconfig[:box_name]
+            box.vm.host_name = host.to_s
+
+            hostconfig[:net].each do |ipconf|
+                box.vm.network "private_network", ipconf
+            end
+            hostconfig[:port].each do |portconf|
+                box.vm.network "forwarded_port", portconf
+            end
+
+            box.vm.provider :virtualbox do |vb|
+                vb.cpus = hostconfig[:cpu]
+                vb.memory = hostconfig[:ram]
+                vb.name = VB_PREFIX + "%s" % host
+            end
+
+            box.vm.provision "shell", path: "provision.sh"
+
+        end
+
+    end
+end

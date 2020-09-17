@@ -42,6 +42,7 @@
 ### Модуль 3. Prometheus  
 ---
 **Занятие 10. Prometheus как новый виток систем мониторинга**  
+[Лабораторный стенд на Vagrant с развернутым Prometheus](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/10)  
 
 **Занятие 11. Prometheus мониторинг кластеров k8s**  
 
