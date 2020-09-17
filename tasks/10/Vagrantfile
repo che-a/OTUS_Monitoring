@@ -14,10 +14,11 @@ HOSTS = {
             {adapter: 2, ip: "192.168.50.10", netmask: 24, virtualbox__intnet: VB_NET},
         ],
         :port => [
-            {guest: 9090, host: 9090}
+            {guest: 9090, host: 9090},
+            {guest: 9100, host: 9100}
         ]
     },
-=begin
+
     :"web1" => {
         :box_name => BOX_NAME,
         :cpu => '1',
@@ -29,7 +30,7 @@ HOSTS = {
             {guest: 80, host: 8080}
         ]
     }
-=end
+
 }
 
 Vagrant.configure("2") do |config|
