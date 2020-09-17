@@ -39,10 +39,19 @@
 
 
 
-### Модуль 3. Prometheus
+### Модуль 3. Prometheus  
 ---
+**Занятие 10. Prometheus как новый виток систем мониторинга**  
 
+**Занятие 11. Prometheus мониторинг кластеров k8s**  
 
+**Занятие 12. Prometheus экспортеры**  
+*Задание:* [Установка и настройка Prometheus, использование exporters](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/12)
+
+**Занятие 13. Prometheus Alerting**  
+
+**Занятие 14. Хранения данных в Prometheus**  
+*Задание:* [Настройка хранения метрик Prometheus](https://github.com/che-a/OTUS_Monitoring/tree/master/tasks/14)
 
 
 ### Модуль 4. Grafana
