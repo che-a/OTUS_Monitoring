@@ -24,6 +24,7 @@ case $HOSTNAME in
         # Возможность использования имен серверов вместо IP-адресов
         echo "$CLIENT1_IP  $CLIENT1" >> /etc/hosts
 
+        # Установка Prometheus server
         wget https://github.com/prometheus/prometheus/releases/download/v2.21.0/prometheus-2.21.0.linux-amd64.tar.gz &> /dev/null
         tar zxvf prometheus-*.linux-amd64.tar.gz && cd prometheus-*.linux-amd64
 
@@ -53,6 +54,7 @@ case $HOSTNAME in
         # ... и проверяем, что она запустилась корректно:
         #systemctl status prometheus
 
+        # Установка node_exporter
 
         ;;
 
