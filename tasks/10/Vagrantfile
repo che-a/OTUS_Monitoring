@@ -15,6 +15,7 @@ HOSTS = {
         ],
         :port => [
             {guest: 9090, host: 9090},
+            {guest: 9093, host: 9093},
             {guest: 9100, host: 9100}
         ]
     },

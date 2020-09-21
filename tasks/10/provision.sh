@@ -39,20 +39,31 @@ case $HOSTNAME in
 
         # Настройка автозапуска через systemd
         sudo cp /home/vagrant/prometheus.service /etc/systemd/system/prometheus.service
-        # Перечитываем конфигурацию systemd:
         sudo systemctl daemon-reload
-
-        # Разрешаем автозапуск:
         sudo systemctl enable prometheus
-
-        # После ручного запуска мониторинга, который мы делали для проверки, могли сбиться права на папку библиотек — снова зададим ей владельца:
         sudo chown -R prometheus:prometheus /var/lib/prometheus
-
-        # Запускаем службу:
         sudo systemctl start prometheus
 
-        # ... и проверяем, что она запустилась корректно:
-        #systemctl status prometheus
+        # Установка alertmanager
+        cd
+        wget https://github.com/prometheus/alertmanager/releases/download/v0.21.0/alertmanager-0.21.0.linux-amd64.tar.gz &> /dev/null
+        tar zxvf alertmanager-*.linux-amd64.tar.gz && cd alertmanager-*.linux-amd64
+
+        sudo mkdir /etc/alertmanager /var/lib/prometheus/alertmanager
+
+        sudo cp alertmanager amtool /usr/local/bin/
+        sudo cp alertmanager.yml /etc/alertmanager
+
+        sudo useradd --no-create-home --shell /bin/false alertmanager
+        chown -R alertmanager:alertmanager /etc/alertmanager /var/lib/prometheus/alertmanager
+        chown alertmanager:alertmanager /usr/local/bin/{alertmanager,amtool}
+
+        # Настройка автозапуска через systemd
+        sudo cp /home/vagrant/alertmanager.service /etc/systemd/system/alertmanager.service
+        sudo systemctl daemon-reload
+        sudo systemctl enable alertmanager
+        sudo systemctl start alertmanager
+
 
         # Установка node_exporter
 
