@@ -19,6 +19,21 @@ sudo echo "locales locales/locales_to_be_generated multiselect ru_RU.UTF-8 UTF-8
 sudo rm "/etc/locale.gen"
 sudo dpkg-reconfigure --frontend noninteractive locales
 
+# Установка node_exporter
+wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz &> /dev/null
+tar zxvf node_exporter-*.linux-amd64.tar.gz
+cd node_exporter-*.linux-amd64
+
+sudo cp node_exporter /usr/local/bin/
+sudo useradd --no-create-home --shell /bin/false nodeusr
+sudo chown -R nodeusr:nodeusr /usr/local/bin/node_exporter
+
+sudo cp /home/vagrant/node_exporter.service /etc/systemd/system/node_exporter.service
+sudo systemctl daemon-reload
+sudo systemctl enable node_exporter.service
+sudo systemctl start node_exporter.service
+
+
 case $HOSTNAME in
     $SRV)
         # Возможность использования имен серверов вместо IP-адресов
@@ -32,6 +47,8 @@ case $HOSTNAME in
 
         sudo cp prometheus promtool /usr/local/bin/
         sudo cp -r console_libraries consoles prometheus.yml /etc/prometheus
+
+        sudo cp /home/vagrant/prometheus.yml /etc/prometheus/prometheus.yml
 
         sudo useradd --no-create-home --shell /bin/false prometheus
         sudo chown -R prometheus:prometheus /etc/prometheus /var/lib/prometheus
@@ -64,12 +81,10 @@ case $HOSTNAME in
         sudo systemctl enable alertmanager
         sudo systemctl start alertmanager
 
-
-        # Установка node_exporter
-
         ;;
 
     $CLIENT1)
+        echo "Empty..."
         ;;
 esac
 

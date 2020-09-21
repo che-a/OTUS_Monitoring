@@ -28,7 +28,8 @@ HOSTS = {
             {adapter: 2, ip: "192.168.50.20", netmask: 24, virtualbox__intnet: VB_NET},
         ],
         :port => [
-            {guest: 80, host: 8080}
+            {guest: 80, host: 8080},
+            {guest: 9100, host: 9101}
         ]
     }
 
