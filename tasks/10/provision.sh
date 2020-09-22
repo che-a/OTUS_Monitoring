@@ -36,6 +36,8 @@ sudo systemctl start node_exporter.service
 
 case $HOSTNAME in
     $SRV)
+        # Установка Apache Benchmark
+        sudo apt install -y apache2-utils
         # Возможность использования имен серверов вместо IP-адресов
         echo "$CLIENT1_IP  $CLIENT1" >> /etc/hosts
 
@@ -81,10 +83,35 @@ case $HOSTNAME in
         sudo systemctl enable alertmanager
         sudo systemctl start alertmanager
 
+
+
         ;;
 
     $CLIENT1)
-        echo "Empty..."
+        sudo apt install -y \
+            php php-bcmath php-bz2 php-intl php-gd php-mbstring \
+            php-mysql php-mysql php-zip php-fpm php-dom php-fileinfo \
+            php-iconv php-json php-pdo php-phar php-simplexml php-xml \
+            php-curl
+        sudo systemctl enable php7.3-fpm.service
+        sudo apt install -y nginx
+        sudo systemctl enable nginx
+
+        # Установка nginx_exporter
+        cd
+        wget https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v0.8.0/nginx-prometheus-exporter-0.8.0-linux-amd64.tar.gz &> /dev/null
+        tar zxvf nginx-prometheus-exporter-*linux-amd64.tar.gz
+
+        sudo useradd --no-create-home --shell /bin/false prometheus
+        #sudo chown -R prometheus:prometheus /etc/prometheus /var/lib/prometheus
+        sudo chown prometheus:prometheus /usr/local/bin/nginx-prometheus-exporter
+
+        sudo cp nginx-prometheus-exporter  /usr/local/bin/
+        # Настройка автозапуска через systemd
+        sudo cp /home/vagrant/nginx_exporter.service /etc/systemd/system/nginx_exporter.service
+        sudo systemctl daemon-reload
+        sudo systemctl enable nginx_exporter.service
+        #sudo systemctl start nginx_exporter.service
         ;;
 esac
 
