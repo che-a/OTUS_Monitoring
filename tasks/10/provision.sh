@@ -83,8 +83,6 @@ case $HOSTNAME in
         sudo systemctl enable alertmanager
         sudo systemctl start alertmanager
 
-
-
         ;;
 
     $CLIENT1)
